@@ -6,7 +6,14 @@ import (
 	"os"
 )
 
-// Zip - This is the main work horse function
+var fileNames []string
+
+//ZipFiles - This func zips all the mentioned files
+func ZipFiles(filenames []string, zipFileName string) error {
+	return Zip(filenames, zipFileName)
+}
+
+// Zip - This is the main work horse functions
 func Zip(filenames []string, zipFileName string) error {
 	newZipFile, err := os.Create(zipFileName)
 	if err != nil {
@@ -16,7 +23,6 @@ func Zip(filenames []string, zipFileName string) error {
 
 	zipWritter := zip.NewWriter(newZipFile)
 	defer zipWritter.Close()
-
 	for _, filename := range filenames {
 		if err := addFileToZip(zipWritter, filename); err != nil {
 			return err
